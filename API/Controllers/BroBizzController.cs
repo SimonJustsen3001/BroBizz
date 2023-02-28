@@ -1,7 +1,7 @@
 ﻿using BroBizz.Models;
 using Microsoft.AspNetCore.Mvc;
 using BroBizz.Handlers;
-using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BroBizz.Controllers
 {
@@ -14,7 +14,7 @@ namespace BroBizz.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BroBizzDevice>> GetTrip(Guid id)
+        public async Task<ActionResult<BroBizzDevice>> GetBroBizz(Guid id)
         {
             return await Mediator.Send(new Details.Query { Id = id });
         }

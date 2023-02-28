@@ -1,6 +1,6 @@
-using Application.Core;
-using BroBizz.Handlers;
-using MediatR;
+using API.Extensions;
+using BroBizz.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -9,25 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
 
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("CorsPolicy", policy =>
-    {
-        policy.AllowAnyMethod()
-        .AllowAnyHeader().WithOrigins("http://localhost:3000");
-    });
-});
-
-builder.Services.AddMediatR(typeof(List.Handler));
-builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 var app = builder.Build();
 
@@ -42,6 +27,8 @@ app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
@@ -52,7 +39,9 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<DataContext>();
-    context.Database.Migrate();
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedData(context, userManager);
 }
 catch (Exception ex)
 {
