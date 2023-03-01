@@ -1,3 +1,4 @@
+using Application.Core;
 using BroBizz.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -7,18 +8,19 @@ namespace BroBizz.Handlers
 {
     public class List
     {
-        public class Query : IRequest<List<BroBizzDevice>> { }
+        public class Query : IRequest<Result<List<BroBizzDevice>>> { }
 
-        public class Handler : IRequestHandler<Query, List<BroBizzDevice>>
+        public class Handler : IRequestHandler<Query, Result<List<BroBizzDevice>>>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
             {
                 _context = context;
             }
-            public async Task<List<BroBizzDevice>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<BroBizzDevice>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.BroBizzDevices.ToListAsync();
+                var brobizzs = await _context.BroBizzDevices.ToListAsync();
+                return Result<List<BroBizzDevice>>.Success(brobizzs);
             }
         }
     }

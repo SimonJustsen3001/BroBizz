@@ -2,9 +2,10 @@ import classes from "../form/BroBizzForm.module.css";
 
 interface Props {
   onClickAdd: () => void;
+  onClickCancel: () => void;
 }
 
-const BroBizzButtons = ({ onClickAdd }: Props) => {
+const BroBizzButtons = ({ onClickAdd, onClickCancel }: Props) => {
   return (
     <>
       <div onClick={onClickAdd} className={classes.button}>
