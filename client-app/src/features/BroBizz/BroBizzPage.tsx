@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { BroBizz } from "./brobizzInterface";
 import { Container, List } from "semantic-ui-react";
 import BroBizzButtons from "./Buttons";
 import LoginForm from "../users/LoginForm";
@@ -9,16 +8,11 @@ import { observer } from "mobx-react-lite";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 
 function BroBizzPage() {
-  const [broBizzs, setBroBizzs] = useState<BroBizz[]>([]);
   const [modalVisibility, setModalVisibility] = useState(false);
   const { brobizzStore } = useStore();
 
   const onClickAddHandler = () => {
     setModalVisibility(true);
-  };
-
-  const onClickCancelHandler = () => {
-    setModalVisibility(false);
   };
 
   useEffect(() => {
@@ -59,7 +53,3 @@ function BroBizzPage() {
 }
 
 export default observer(BroBizzPage);
-
-/* : (
-          <div className={classes.grid}>Currently loading Brobizz...</div>
-        )*/
