@@ -4,8 +4,8 @@
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public List<Trip> Trips = new List<Trip>();
-        public List<Invoice> Invoices = new List<Invoice>();
+        public ICollection<Trip> Trips { get; set; }
+        public ICollection<Invoice> Invoices { get; set; }
 
         public BroBizzDevice(string name)
         {

@@ -4,13 +4,16 @@ import { Button, Header, Label } from "semantic-ui-react";
 import * as Yup from "yup";
 import TextInputStandard from "../../app/common/form/TextInputStandard";
 import { useStore } from "../../app/stores/store";
+import ValidationError from "../errors/ValidationError";
 
-export default observer(function LoginForm() {
+export default observer(function RegisterForm() {
   const { userStore, modalStore } = useStore();
 
   const validationSchema = Yup.object({
+    displayName: Yup.string().required("Display name cannot be empty"),
     email: Yup.string().required("Email cannot be empty").email(),
     password: Yup.string().required("Password cannot be empty"),
+    username: Yup.string().required("Username cannot be empty"),
   });
 
   return (
@@ -18,23 +21,38 @@ export default observer(function LoginForm() {
       validationSchema={validationSchema}
       enableReinitialize
       initialValues={{
+        displayName: "",
+        username: "",
         email: "",
         password: "",
         error: null,
       }}
-      onSubmit={(value, { setErrors }) =>
-        userStore
-          .login(value)
-          .catch((error) => setErrors({ error: "Invalid email or password" }))
-      }
+      onSubmit={(value, { setErrors }) => {
+        console.log(value);
+        userStore.register(value).catch((error) => setErrors({ error }));
+      }}
     >
-      {({ handleSubmit, isSubmitting, errors }) => (
-        <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
+      {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
+        <Form
+          className="ui form error"
+          onSubmit={handleSubmit}
+          autoComplete="off"
+        >
           <Header
             as="h2"
-            content="Login to BMS"
+            content="Sign up to BMS"
             textAlign="center"
             color="green"
+          />
+          <TextInputStandard
+            name="displayName"
+            placeholder="Display Name"
+            label="Enter a name to be displayed on the profile"
+          />
+          <TextInputStandard
+            name="username"
+            placeholder="Username"
+            label="Enter a username for your profile"
           />
           <TextInputStandard name="email" placeholder="Email" label="Email" />
           <TextInputStandard
@@ -45,22 +63,15 @@ export default observer(function LoginForm() {
           />
           <ErrorMessage
             name="error"
-            render={() => (
-              <Label
-                style={{ marginBottom: 10 }}
-                basic
-                color="red"
-                content={errors.error}
-              />
-            )}
+            render={() => <ValidationError errors={errors.error} />}
           />
           <Button
-            primary
+            disabled={!isValid || !dirty || isSubmitting}
             loading={isSubmitting}
             positive
             floated="right"
             type="submit"
-            content="Login"
+            content="Register"
           />
           <Button
             onClick={modalStore.closeModal}
