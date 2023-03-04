@@ -1,5 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace BroBizz.Models
 {
+    [Owned]
     public class Invoice
     {
         public Guid Id { get; set; }

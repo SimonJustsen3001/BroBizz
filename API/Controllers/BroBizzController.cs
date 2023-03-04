@@ -15,16 +15,17 @@ namespace BroBizz.Controllers
             return HandleResult(await Mediator.Send(new List.Query()));
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetBroBizz(Guid id)
-        {
-            return HandleResult(await Mediator.Send(new Details.Query { Id = id }));
-        }
-
         [HttpPost]
         public async Task<IActionResult> CreateBroBizzDevice(BroBizzDevice broBizzDevice)
         {
+            Console.WriteLine(broBizzDevice.Id);
             return HandleResult(await Mediator.Send(new CreateBroBizz.Command { BroBizzDevice = broBizzDevice }));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBroBizz(Guid id)
+        {
+            return HandleResult(await Mediator.Send(new GetBroBizzTrips.Query { Id = id }));
         }
 
         [HttpPut("{id}")]
@@ -37,7 +38,7 @@ namespace BroBizz.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBroBizzDevice(Guid id)
         {
-            return HandleResult(await Mediator.Send(new DeleteBroBizz.Command{Id = id}));
+            return HandleResult(await Mediator.Send(new DeleteBroBizz.Command { Id = id }));
         }
     }
 }

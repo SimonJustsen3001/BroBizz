@@ -10,18 +10,18 @@ using Persistence;
 
 namespace BroBizz.Handlers
 {
-    public class CreateBroBizz
+    public class CreateTrip
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public BroBizzDevice BroBizzDevice { get; set; }
+            public Trip Trip { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.BroBizzDevice).SetValidator(new BroBizzValidator());
+                RuleFor(x => x.Trip).SetValidator(new TripValidator());
             }
         }
 
@@ -36,17 +36,30 @@ namespace BroBizz.Handlers
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
+                //var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
-                Console.WriteLine($"\n\n{request.BroBizzDevice.Id} {request.BroBizzDevice.Name}\n\n");
+                Console.WriteLine($"\n\n{request.Trip.Id}\n{request.Trip.Bridge.Name}\n{request.Trip.Vehicle.LicensePlate}\n{request.Trip.Invoice.Id}\n\n");
 
-                user.BroBizzDevices.Add(request.BroBizzDevice);
+                Console.WriteLine("\n\n This is before _context add\n\n");
 
-                _context.BroBizzDevices.Add(request.BroBizzDevice);
+                Trip trip = new Trip();
+
+                trip.Id = request.Trip.Id;
+                trip.Invoice = request.Trip.Invoice;
+                if (!_context.Bridges.Any(x => x.Name == request.Trip.Bridge.Name))
+                {
+
+                }
+                trip.Bridge = request.Trip.Bridge;
+                if (!_context.Vehicles.Any(x => x.LicensePlate == request.Trip.Vehicle.LicensePlate))
+                    trip.Vehicle = request.Trip.Vehicle;
+
+
+                Console.WriteLine("\n\n This is after _context add\n\n");
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return Result<Unit>.Failure("Failed to create activity");
+                if (!result) return Result<Unit>.Failure("Failed to make a new trip");
 
                 return Result<Unit>.Success(Unit.Value);
             }

@@ -7,6 +7,15 @@ namespace Persistence
     {
         public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
         {
+            if (!context.Bridges.Any())
+            {
+                var bridges = new List<Bridge> {
+                    new Bridge("øresundsbroen"),
+                    new Bridge("storebæltsbroen")
+                };
+                await context.Bridges.AddRangeAsync(bridges);
+            }
+
             if (!userManager.Users.Any())
             {
                 var users = new List<AppUser>{
@@ -21,17 +30,6 @@ namespace Persistence
                 }
 
             }
-
-            if (context.BroBizzDevices.Any()) return;
-
-            var broBizzs = new List<BroBizzDevice>
-            {
-                new BroBizzDevice("Simon"),
-                new BroBizzDevice("Jesper")
-            };
-
-            await context.BroBizzDevices.AddRangeAsync(broBizzs);
-            await context.SaveChangesAsync();
         }
     }
 }

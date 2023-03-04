@@ -1,7 +1,80 @@
-import React, { useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
+import { Link } from "react-router-dom";
+import { Button, Container, Header, Segment } from "semantic-ui-react";
+import { useStore } from "../../app/stores/store";
+import RegisterForm from "../form/RegisterForm";
+import LoginForm from "../form/LoginForm";
+import CreateForm from "../form/CreateForm";
+import classes from "./BroBizzPage.module.css";
+import { useEffect } from "react";
+
+export default observer(function BroBizzPage() {
+  const { userStore, modalStore, brobizzStore } = useStore();
+
+  useEffect(() => {
+    brobizzStore.loadBroBizzs();
+  }, [brobizzStore]);
+
+  return (
+    <Segment textAlign="center" vertical className="masthead">
+      <Container text style={{ marginTop: "7em" }}>
+        {userStore.isLoggedIn ? (
+          <>
+            <Header>BroBizz Overview</Header>
+            <div className={classes.buttongrid}>
+              <Button
+                size="huge"
+                className={classes.button}
+                onClick={() => modalStore.openModal(<CreateForm />)}
+              >
+                Add BroBizz
+              </Button>
+              <Button
+                size="huge"
+                className={classes.button}
+                onClick={() => modalStore.openModal(<CreateForm />)}
+              >
+                Add BroBizz
+              </Button>
+            </div>
+            <div className={classes.grid}>
+              {brobizzStore.brobizzs.map((brobizz) => (
+                <Link
+                  key={brobizz.id}
+                  className={classes.block}
+                  to={brobizz.id}
+                >
+                  <p className={classes.text}>{brobizz.name}</p>
+                </Link>
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
+            <Header>No user registered, please log in or register</Header>
+            <Button
+              onClick={() => modalStore.openModal(<LoginForm />)}
+              size="huge"
+            >
+              Login!
+            </Button>
+            <Button
+              onClick={() => modalStore.openModal(<RegisterForm />)}
+              size="huge"
+            >
+              Register!
+            </Button>
+          </>
+        )}
+      </Container>
+    </Segment>
+  );
+});
+
+/*import React, { useEffect, useState } from "react";
 import { Container, List } from "semantic-ui-react";
 import BroBizzButtons from "./Buttons";
-import LoginForm from "../users/LoginForm";
+import LoginForm from "../form/LoginForm";
 import classes from "./BroBizzPage.module.css";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
@@ -9,7 +82,7 @@ import LoadingComponent from "../../app/layout/LoadingComponent";
 
 function BroBizzPage() {
   const [modalVisibility, setModalVisibility] = useState(false);
-  const { brobizzStore } = useStore();
+  const { brobizzStore, modalStore } = useStore();
 
   const onClickAddHandler = () => {
     setModalVisibility(true);
@@ -52,4 +125,4 @@ function BroBizzPage() {
   );
 }
 
-export default observer(BroBizzPage);
+export default observer(BroBizzPage);*/

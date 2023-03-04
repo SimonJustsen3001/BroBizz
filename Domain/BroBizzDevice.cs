@@ -4,18 +4,19 @@
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Trip> Trips { get; set; }
-        public ICollection<Invoice> Invoices { get; set; }
 
-        public BroBizzDevice(string name)
+        public AppUser AppUser { get; set; }
+        public ICollection<Trip> Trips { get; set; } = new List<Trip>();
+
+        public BroBizzDevice(Guid id, string name)
         {
+            Id = id;
             Name = name;
         }
 
         public void AddTrip(Trip trip)
         {
             Trips.Add(trip);
-            Invoices.Add(trip.Invoice);
         }
 
         public string calcTotalPrice()
