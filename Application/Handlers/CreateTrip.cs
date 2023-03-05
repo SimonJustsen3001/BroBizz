@@ -36,26 +36,23 @@ namespace BroBizz.Handlers
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                //var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
-
-                Console.WriteLine($"\n\n{request.Trip.Id}\n{request.Trip.Bridge.Name}\n{request.Trip.Vehicle.LicensePlate}\n{request.Trip.Invoice.Id}\n\n");
-
-                Console.WriteLine("\n\n This is before _context add\n\n");
-
                 Trip trip = new Trip();
 
                 trip.Id = request.Trip.Id;
                 trip.Invoice = request.Trip.Invoice;
                 if (!_context.Bridges.Any(x => x.Name == request.Trip.Bridge.Name))
-                {
+                    trip.Bridge = request.Trip.Bridge;
+                else
+                    trip.BridgeName = request.Trip.Bridge.Name;
 
-                }
-                trip.Bridge = request.Trip.Bridge;
                 if (!_context.Vehicles.Any(x => x.LicensePlate == request.Trip.Vehicle.LicensePlate))
                     trip.Vehicle = request.Trip.Vehicle;
+                else
+                {
+                    trip.VehicleLicensePlate = request.Trip.Vehicle.LicensePlate;
+                }
 
-
-                Console.WriteLine("\n\n This is after _context add\n\n");
+                _context.Trips.Add(trip);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
