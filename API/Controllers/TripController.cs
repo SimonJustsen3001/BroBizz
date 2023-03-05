@@ -7,16 +7,16 @@ namespace BroBizz.Controllers
 {
     public class TripController : ApiBaseController
     {
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandleResult(await Mediator.Send(new GetTrips.Query { Id = id }));
         }
 
         [HttpPost("{id}")]
-        public async Task<IActionResult> CreateTrip(Trip trip)
+        public async Task<IActionResult> CreateTrip(Guid id, Trip trip)
         {
-            return HandleResult(await Mediator.Send(new CreateTrip.Command { Trip = trip }));
+            return HandleResult(await Mediator.Send(new CreateTrip.Command { Id = id, Trip = trip }));
         }
     }
 }

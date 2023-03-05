@@ -4,7 +4,6 @@ using Application.Validators;
 using BroBizz.Models;
 using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -14,6 +13,7 @@ namespace BroBizz.Handlers
     {
         public class Command : IRequest<Result<Unit>>
         {
+            public Guid Id { get; set; }
             public Trip Trip { get; set; }
         }
 
@@ -40,18 +40,21 @@ namespace BroBizz.Handlers
 
                 trip.Id = request.Trip.Id;
                 trip.Invoice = request.Trip.Invoice;
-                if (!_context.Bridges.Any(x => x.Name == request.Trip.Bridge.Name))
+                if (!_context.Bridges.AsNoTracking().Any(x => x.Name == request.Trip.Bridge.Name))
                     trip.Bridge = request.Trip.Bridge;
                 else
-                    trip.BridgeName = request.Trip.Bridge.Name;
+                    trip.Bridge = _context.Bridges.FirstOrDefault(x => x.Name == request.Trip.Bridge.Name);
 
-                if (!_context.Vehicles.Any(x => x.LicensePlate == request.Trip.Vehicle.LicensePlate))
+                if (!_context.Vehicles.AsNoTracking().Any(x => x.LicensePlate == request.Trip.Vehicle.LicensePlate))
                     trip.Vehicle = request.Trip.Vehicle;
                 else
                 {
-                    trip.VehicleLicensePlate = request.Trip.Vehicle.LicensePlate;
+                    trip.Vehicle = _context.Vehicles.FirstOrDefault(x => x.LicensePlate == request.Trip.Vehicle.LicensePlate);
                 }
 
+                var brobizz = await _context.BroBizzDevices.FirstOrDefaultAsync(x => x.Id == request.Id);
+
+                brobizz.Trips.Add(trip);
                 _context.Trips.Add(trip);
 
                 var result = await _context.SaveChangesAsync() > 0;
