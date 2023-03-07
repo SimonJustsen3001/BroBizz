@@ -23,6 +23,10 @@ export default class BroBizzStore {
 
     try {
       const brobizzs = await agent.BroBizzs.list();
+      console.log(brobizzs);
+      if (this.brobizzs) {
+        this.brobizzs = [];
+      }
       brobizzs.forEach((brobizz) => {
         this.brobizzs.push(brobizz);
       });

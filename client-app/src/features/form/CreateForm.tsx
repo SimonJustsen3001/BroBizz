@@ -51,6 +51,9 @@ export default observer(function CreateForm() {
             render={() => <ValidationError errors={errors.error} />}
           />
           <Button
+            onClick={() => {
+              setTimeout(brobizzStore.loadBroBizzs, 500);
+            }}
             disabled={!isValid || !dirty || isSubmitting}
             loading={isSubmitting}
             positive

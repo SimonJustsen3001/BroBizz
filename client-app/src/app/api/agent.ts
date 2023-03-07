@@ -25,7 +25,7 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use(
   async (response) => {
-    await sleep(1000);
+    await sleep(500);
     return response;
   },
   (error: AxiosError) => {
@@ -34,6 +34,7 @@ axios.interceptors.response.use(
       case 400:
         if (config.method === "get" && data.errors.hasOwnProperty("id")) {
           router.navigate("/not-found");
+          console.log("error");
         }
         if (data.errors) {
           const modalStateErrors = [];
@@ -82,8 +83,8 @@ const BroBizzs = {
 };
 
 const Trips = {
-  list: (brobizzId: string) =>
-    requests.get<Trip[]>(`/brobizz/${brobizzId}`),
+  list: (brobizzId: string) => requests.get<Trip[]>(`/trip/${brobizzId}`),
+  single: (tripId: string) => requests.get<Trip>(`/trip/${tripId}/single`),
 };
 
 const Account = {

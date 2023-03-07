@@ -18,5 +18,11 @@ namespace BroBizz.Controllers
         {
             return HandleResult(await Mediator.Send(new CreateTrip.Command { Id = id, Trip = trip }));
         }
+
+        [HttpGet("{tripId}/single")]
+        public async Task<IActionResult> GetSingleTrip(Guid tripId)
+        {
+            return HandleResult(await Mediator.Send(new GetSingleTrip.Query { TripId = tripId }));
+        }
     }
 }

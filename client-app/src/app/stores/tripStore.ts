@@ -1,5 +1,4 @@
 import { makeAutoObservable } from "mobx";
-import { BroBizz } from "../../features/BroBizz/brobizzInterface";
 import { Trip } from "../../features/Trip/tripInterface";
 import agent from "../api/agent";
 
@@ -8,6 +7,7 @@ export default class TripStore {
   selectedTrip: Trip | null = null;
   id = "";
   name = "";
+  tripDate = "";
   editMode = false;
   loading = false;
   loadingInitial = false;
@@ -21,7 +21,26 @@ export default class TripStore {
 
     try {
       const trips = await agent.Trips.list(id);
-      console.log(trips);
+      if (this.trips) {
+        this.trips = [];
+      }
+      trips.forEach((trip) => {
+        this.trips.push(trip);
+      });
+      this.setLoadingInitial(false);
+    } catch (error) {
+      console.log(error);
+      this.setLoadingInitial(false);
+    }
+  };
+
+  loadTrip = async (id: string) => {
+    this.setLoadingInitial(true);
+
+    try {
+      const trip = await agent.Trips.single(id);
+      console.log(trip);
+      this.selectedTrip = trip;
       this.setLoadingInitial(false);
     } catch (error) {
       console.log(error);
@@ -32,10 +51,4 @@ export default class TripStore {
   setLoadingInitial = (state: boolean) => {
     this.loadingInitial = state;
   };
-
-  //   addBroBizz = async (creds: TripFormValues) => {
-  //     await agent.Trip.create(creds);
-  //     router.navigate("/brobizz");
-  //     store.modalStore.closeModal();
-  //   };
 }

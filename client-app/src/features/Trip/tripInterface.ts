@@ -9,6 +9,8 @@ interface Vehicle {
 
 interface Invoice {
   id: string;
+  companyName: string;
+  companyAddress: string;
   customerName: string;
   customerAddress: string;
   supplyDate: Date;

@@ -1,12 +1,12 @@
 import { observer } from "mobx-react-lite";
-import { Link } from "react-router-dom";
-import { Button, Container, Header, Segment } from "semantic-ui-react";
+import { Button, Container, Grid, Header, Segment } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import RegisterForm from "../form/RegisterForm";
 import LoginForm from "../form/LoginForm";
 import CreateForm from "../form/CreateForm";
 import classes from "./BroBizzPage.module.css";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default observer(function BroBizzPage() {
   const { userStore, modalStore, brobizzStore } = useStore();
@@ -17,7 +17,7 @@ export default observer(function BroBizzPage() {
 
   return (
     <Segment textAlign="center" vertical className="masthead">
-      <Container text style={{ marginTop: "7em" }}>
+      <Container text>
         {userStore.isLoggedIn ? (
           <>
             <Header>BroBizz Overview</Header>
@@ -29,25 +29,23 @@ export default observer(function BroBizzPage() {
               >
                 Add BroBizz
               </Button>
-              <Button
-                size="huge"
-                className={classes.button}
-                onClick={() => modalStore.openModal(<CreateForm />)}
-              >
-                Add BroBizz
-              </Button>
             </div>
-            <div className={classes.grid}>
+            <Grid columns={3} stretched>
               {brobizzStore.brobizzs.map((brobizz) => (
-                <Link
-                  key={brobizz.id}
-                  className={classes.block}
-                  to={brobizz.id}
-                >
-                  <p className={classes.text}>{brobizz.name}</p>
-                </Link>
+                <Grid.Column key={brobizz.id}>
+                  <Segment
+                    raised
+                    inverted
+                    circular
+                    color="green"
+                    as={Link}
+                    to={brobizz.id}
+                  >
+                    {brobizz.name}
+                  </Segment>
+                </Grid.Column>
               ))}
-            </div>
+            </Grid>
           </>
         ) : (
           <>

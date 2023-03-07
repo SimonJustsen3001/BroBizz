@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { Link, useParams } from "react-router-dom";
-import { Button, Container, Header, Segment } from "semantic-ui-react";
+import { Button, Container, Grid, Header, Segment } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import RegisterForm from "../form/RegisterForm";
 import LoginForm from "../form/LoginForm";
@@ -12,9 +12,6 @@ export default observer(function TripPage() {
   const { userStore, modalStore, tripStore } = useStore();
 
   const { id } = useParams();
-
-  console.log(id);
-
   useEffect(() => {
     tripStore.loadTrips(id!);
   }, [tripStore]);
@@ -24,7 +21,9 @@ export default observer(function TripPage() {
       <Container text style={{ marginTop: "7em" }}>
         {userStore.isLoggedIn ? (
           <>
-            <Header>Brobizz "Insert current id here"</Header>
+            <Header>
+              <strong>Brobizz:</strong> {id}
+            </Header>
             <div className={classes.buttongrid}>
               <Button
                 size="huge"
@@ -41,13 +40,27 @@ export default observer(function TripPage() {
                 Add BroBizz
               </Button>
             </div>
-            <div className={classes.grid}>
+            <Grid columns={3} stretched>
               {tripStore.trips.map((trip) => (
-                <Link key={trip.id} className={classes.block} to={trip.id}>
-                  <p className={classes.text}>{trip.id}</p>
-                </Link>
+                <Grid.Column key={trip.id}>
+                  <Segment
+                    raised
+                    inverted
+                    circular
+                    color="green"
+                    as={Link}
+                    to={`/trip/${trip.id}`}
+                  >
+                    <h3>{trip.bridge.name}</h3>
+                    {trip.vehicle.type}
+                    <br />
+                    {trip.vehicle.licensePlate}
+                    <br />
+                    {trip.invoice.supplyDate.toString().split("T")[0]}
+                  </Segment>
+                </Grid.Column>
               ))}
-            </div>
+            </Grid>
           </>
         ) : (
           <>

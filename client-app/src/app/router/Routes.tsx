@@ -7,6 +7,7 @@ import TestErrors from "../../features/errors/TestError";
 import HomePage from "../../features/home/HomePage";
 import LoginForm from "../../features/form/LoginForm";
 import App from "../layout/App";
+import Trip from "../../features/Trip/Trip";
 
 export const routes: RouteObject[] = [
   {
@@ -16,6 +17,7 @@ export const routes: RouteObject[] = [
       { path: "", element: <HomePage /> },
       { path: "brobizz", element: <BroBizzPage /> },
       { path: "brobizz/:id", element: <TripPage /> },
+      { path: "trip/:id", element: <Trip /> },
       { path: "login", element: <LoginForm /> },
       { path: "errors", element: <TestErrors /> },
       { path: "server-error", element: <ServerError /> },
