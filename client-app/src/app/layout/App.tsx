@@ -26,7 +26,7 @@ function App() {
     <>
       <ModalContainer />
       <ToastContainer position="bottom-right" theme="colored" />
-      <NavBar />{" "}
+      <NavBar />
       <Container style={{ marginTop: "7em" }}>
         <Outlet />
       </Container>

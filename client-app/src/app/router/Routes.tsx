@@ -1,11 +1,13 @@
-import { createBrowserRouter, Navigate, RouteObject } from "react-router-dom";
+import { createBrowserRouter, RouteObject } from "react-router-dom";
 import BroBizzPage from "../../features/BroBizz/BroBizzPage";
+import TripPage from "../../features/Trip/TripPage";
 import NotFound from "../../features/errors/NotFound";
 import ServerError from "../../features/errors/ServerError";
 import TestErrors from "../../features/errors/TestError";
 import HomePage from "../../features/home/HomePage";
-import LoginForm from "../../features/users/LoginForm";
+import LoginForm from "../../features/form/LoginForm";
 import App from "../layout/App";
+import Trip from "../../features/Trip/Trip";
 
 export const routes: RouteObject[] = [
   {
@@ -14,11 +16,12 @@ export const routes: RouteObject[] = [
     children: [
       { path: "", element: <HomePage /> },
       { path: "brobizz", element: <BroBizzPage /> },
+      { path: "brobizz/:id", element: <TripPage /> },
+      { path: "trip/:id", element: <Trip /> },
       { path: "login", element: <LoginForm /> },
       { path: "errors", element: <TestErrors /> },
       { path: "server-error", element: <ServerError /> },
       { path: "not-found", element: <NotFound /> },
-      { path: "*", element: <Navigate replace to={"/not-found"} /> },
     ],
   },
 ];

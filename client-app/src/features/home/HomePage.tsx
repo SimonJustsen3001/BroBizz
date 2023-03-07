@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button, Container, Header, Segment } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import RegisterForm from "../form/RegisterForm";
-import LoginForm from "../users/LoginForm";
+import LoginForm from "../form/LoginForm";
 
 export default observer(function HomePage() {
   const { userStore, modalStore } = useStore();

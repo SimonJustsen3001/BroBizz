@@ -1,8 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace BroBizz.Models
 {
+    [PrimaryKey(nameof(Name))]
     public class Bridge
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public Bridge(string name)
         {

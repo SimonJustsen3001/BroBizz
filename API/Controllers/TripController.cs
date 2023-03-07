@@ -1,4 +1,5 @@
-﻿using BroBizz.Models;
+﻿using BroBizz.Handlers;
+using BroBizz.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -6,20 +7,22 @@ namespace BroBizz.Controllers
 {
     public class TripController : ApiBaseController
     {
-        /*
-        private static IEnumerable<Trip> Trips = new[]
-        {
-            new Trip(new Bridge("Øresunds Broen"), new Vehicle("Motorcycle", "AB12345"), new Invoice(0, "Stark", "Skanderborgvej 277b, 8260 Viby", DateTime.Now, DateTime.Now, 100)),
-            new Trip(new Bridge("Øresunds Broen"), new Vehicle("Motorcycle", "AB12345"), new Invoice(0, "Stark", "Skanderborgvej 277b, 8260 Viby", DateTime.Now, DateTime.Now, 100))
-        };
-        */
-        /*
         [HttpGet("{id}")]
-        public Trip[] Get(int id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            List<Trip> trips = Trips.ToArray();
-            return trips;
+            return HandleResult(await Mediator.Send(new GetTrips.Query { Id = id }));
         }
-        */
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> CreateTrip(Guid id, Trip trip)
+        {
+            return HandleResult(await Mediator.Send(new CreateTrip.Command { Id = id, Trip = trip }));
+        }
+
+        [HttpGet("{tripId}/single")]
+        public async Task<IActionResult> GetSingleTrip(Guid tripId)
+        {
+            return HandleResult(await Mediator.Send(new GetSingleTrip.Query { TripId = tripId }));
+        }
     }
 }

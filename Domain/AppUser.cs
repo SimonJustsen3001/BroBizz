@@ -6,6 +6,8 @@ namespace BroBizz.Models
     {
         public string DisplayName { get; set; }
 
-        public ICollection<BroBizzDevice> BroBizzDevices { get; set; }
+        public ICollection<BroBizzDevice> BroBizzDevices { get; set; } = new List<BroBizzDevice>();
+
+        public ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
     }
 }

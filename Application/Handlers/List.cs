@@ -1,4 +1,5 @@
 using Application.Core;
+using Application.Interfaces;
 using BroBizz.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,14 +14,19 @@ namespace BroBizz.Handlers
         public class Handler : IRequestHandler<Query, Result<List<BroBizzDevice>>>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(DataContext context, IUserAccessor userAccessor)
             {
+                _userAccessor = userAccessor;
                 _context = context;
             }
             public async Task<Result<List<BroBizzDevice>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var brobizzs = await _context.BroBizzDevices.ToListAsync();
-                return Result<List<BroBizzDevice>>.Success(brobizzs);
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
+
+                var userbrobizzs = await _context.BroBizzDevices.Where(x => x.AppUser.Id == user.Id).ToListAsync();
+
+                return Result<List<BroBizzDevice>>.Success(userbrobizzs);
             }
         }
     }

@@ -1,30 +1,18 @@
 .block {
-  margin: 1rem 0;
-  padding: 1rem;
-  background-color: #05c967;
-  border-radius: 32px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-  animation: animate-in 1s ease-in forwards;
-  text-align: center;
-  transition: 0.5s;
+  background-color: #abab9f;
   text-decoration: none;
-  background: linear-gradient(to bottom, #05c967 50%, #03ac57 50%) top;
-  background-size: 100% 200%;
-}
-
-.block:hover {
-  background-position: bottom;
-  background-color: #03944c;
 }
 
 .grid {
+  background-color: grey;
+  text-align: left;
   list-style: none;
   max-width: 50rem;
   margin: 1rem auto;
   padding: 1rem 0;
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(3, 30%);
+  grid-template-columns: repeat(2, 50%);
   justify-content: center;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
@@ -65,6 +53,30 @@
   margin: 0.25rem 0 0 0;
   color: #fffffd;
   font-style: bold;
+}
+
+.title,
+.smalltitle,
+.billingtitle {
+  white-space: pre-wrap;
+
+  margin: 0.25rem 0 0 0;
+  color: #000000;
+  font-style: bold;
+  border-bottom: #03944c;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.smalltitle {
+  font-size: 1.5rem;
+}
+
+.billingtitle {
+  font-size: 1.3rem;
+  color: rgb(20, 102, 255)
 }
 
 .text {

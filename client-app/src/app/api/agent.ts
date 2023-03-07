@@ -1,7 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
-import { BroBizz } from "../../features/BroBizz/brobizzInterface";
-import { User, UserFormValues } from "../../features/users/users";
+import {
+  BroBizz,
+  BroBizzFormValues,
+} from "../../features/BroBizz/brobizzInterface";
+import { Trip } from "../../features/Trip/tripInterface";
+import { User, UserFormValues } from "../models/users";
 import { router } from "../router/Routes";
 import { store } from "../stores/store";
 
@@ -21,7 +25,7 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use(
   async (response) => {
-    await sleep(1000);
+    await sleep(500);
     return response;
   },
   (error: AxiosError) => {
@@ -30,6 +34,7 @@ axios.interceptors.response.use(
       case 400:
         if (config.method === "get" && data.errors.hasOwnProperty("id")) {
           router.navigate("/not-found");
+          console.log("error");
         }
         if (data.errors) {
           const modalStateErrors = [];
@@ -73,6 +78,13 @@ const requests = {
 
 const BroBizzs = {
   list: () => requests.get<BroBizz[]>("/brobizz"),
+  create: (brobizz: BroBizzFormValues) =>
+    requests.post<BroBizz>("/brobizz", brobizz),
+};
+
+const Trips = {
+  list: (brobizzId: string) => requests.get<Trip[]>(`/trip/${brobizzId}`),
+  single: (tripId: string) => requests.get<Trip>(`/trip/${tripId}/single`),
 };
 
 const Account = {
@@ -85,6 +97,7 @@ const Account = {
 const agent = {
   BroBizzs,
   Account,
+  Trips,
 };
 
 export default agent;

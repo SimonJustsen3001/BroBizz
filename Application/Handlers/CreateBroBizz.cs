@@ -1,8 +1,11 @@
 using Application.Core;
+using Application.Interfaces;
 using Application.Validators;
 using BroBizz.Models;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace BroBizz.Handlers
@@ -25,12 +28,20 @@ namespace BroBizz.Handlers
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(DataContext context, IUserAccessor userAccessor)
             {
+                _userAccessor = userAccessor;
                 _context = context;
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
+
+                Console.WriteLine($"\n\n{request.BroBizzDevice.Id} {request.BroBizzDevice.Name}\n\n");
+
+                user.BroBizzDevices.Add(request.BroBizzDevice);
+
                 _context.BroBizzDevices.Add(request.BroBizzDevice);
 
                 var result = await _context.SaveChangesAsync() > 0;
