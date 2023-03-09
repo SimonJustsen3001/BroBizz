@@ -4,6 +4,7 @@ import CommonStore from "./commonStore";
 import ModalStore from "./modalStore";
 import UserStore from "./userStore";
 import TripStore from "./tripStore";
+import InvoiceStore from "./invoiceStore";
 
 interface Store {
   brobizzStore: BroBizzStore;
@@ -11,6 +12,7 @@ interface Store {
   commonStore: CommonStore;
   modalStore: ModalStore;
   tripStore: TripStore;
+  invoiceStore: InvoiceStore;
 }
 
 export const store: Store = {
@@ -19,6 +21,7 @@ export const store: Store = {
   commonStore: new CommonStore(),
   modalStore: new ModalStore(),
   tripStore: new TripStore(),
+  invoiceStore: new InvoiceStore(),
 };
 
 export const StoreContext = createContext(store);

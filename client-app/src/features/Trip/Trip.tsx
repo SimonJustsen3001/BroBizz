@@ -18,7 +18,7 @@ export default observer(function TripPage() {
 
   return (
     <Segment textAlign="center" vertical className="masthead">
-      <Container text style={{ marginTop: "7em" }}>
+      <Container text>
         {userStore.isLoggedIn ? (
           <>
             <Grid columns="equal">
@@ -113,6 +113,9 @@ export default observer(function TripPage() {
                         <p className={classes.text}>Supply Date</p>
                       </Segment>
                       <Segment inverted color="green">
+                        <p className={classes.text}>Price</p>
+                      </Segment>
+                      <Segment inverted color="green">
                         <p className={classes.text}>Invoice No.</p>
                       </Segment>
                     </Grid.Column>
@@ -133,6 +136,11 @@ export default observer(function TripPage() {
                               .toString()
                               .split("T")[0]
                           }
+                        </p>
+                      </Segment>
+                      <Segment inverted color="green">
+                        <p className={classes.text}>
+                          {tripStore.selectedTrip?.invoice.price} dkk.
                         </p>
                       </Segment>
                       <Segment inverted color="green">

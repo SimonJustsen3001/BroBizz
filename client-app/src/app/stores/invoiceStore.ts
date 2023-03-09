@@ -1,46 +1,41 @@
 import { makeAutoObservable } from "mobx";
-import { Trip } from "../interfaces/tripInterface";
 import agent from "../api/agent";
+import { Invoice } from "../interfaces/invoiceInterface";
 
-export default class TripStore {
-  trips: Trip[] = [];
-  selectedTrip: Trip | null = null;
-  id = "";
-  name = "";
-  tripDate = "";
-  editMode = false;
-  loading = false;
+export default class InvoiceStore {
+  invoices: Invoice[] = [];
+  selectedInvoice: Invoice | null = null;
   loadingInitial = false;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  loadTrips = async (id: string) => {
+  loadInvoices = async () => {
     this.setLoadingInitial(true);
 
     try {
-      const trips = await agent.Trips.list(id);
-      if (this.trips) {
-        this.trips = [];
+      const invoices = await agent.Invoices.list();
+      console.log(invoices);
+      if (this.invoices) {
+        this.invoices = [];
       }
-      trips.forEach((trip) => {
-        this.trips.push(trip);
+      invoices.forEach((invoice) => {
+        this.invoices.push(invoice);
       });
       this.setLoadingInitial(false);
     } catch (error) {
-      console.log(error);
       this.setLoadingInitial(false);
     }
   };
 
-  loadTrip = async (id: string) => {
+  loadInvoice = async (id: string) => {
     this.setLoadingInitial(true);
 
     try {
-      const trip = await agent.Trips.single(id);
-      console.log(trip);
-      this.selectedTrip = trip;
+      const invoice = await agent.Invoices.single(id);
+      console.log(invoice);
+      this.selectedInvoice = invoice;
       this.setLoadingInitial(false);
     } catch (error) {
       console.log(error);

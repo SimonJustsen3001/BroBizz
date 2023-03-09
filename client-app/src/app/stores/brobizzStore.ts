@@ -1,8 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import {
-  BroBizz,
-  BroBizzFormValues,
-} from "../../features/BroBizz/brobizzInterface";
+import { BroBizz, BroBizzFormValues } from "../interfaces/brobizzInterface";
 import agent from "../api/agent";
 import { router } from "../router/Routes";
 import { store } from "./store";

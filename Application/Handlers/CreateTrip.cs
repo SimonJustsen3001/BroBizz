@@ -53,7 +53,9 @@ namespace BroBizz.Handlers
                 }
 
                 var brobizz = await _context.BroBizzDevices.FirstOrDefaultAsync(x => x.Id == request.Id);
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
+                user.Invoices.Add(request.Trip.Invoice);
                 brobizz.Trips.Add(trip);
                 _context.Trips.Add(trip);
 

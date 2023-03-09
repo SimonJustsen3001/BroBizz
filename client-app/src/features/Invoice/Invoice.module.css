@@ -1,0 +1,31 @@
+.title,
+.smalltitle,
+.billingtitle {
+  white-space: pre-wrap;
+
+  margin: 0.25rem 0 0 0;
+  color: #000000;
+  font-style: bold;
+  border-bottom: #03944c;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.smalltitle {
+  font-size: 1.5rem;
+}
+
+.billingtitle {
+  font-size: 1.3rem;
+  color: rgb(20, 102, 255);
+}
+
+.text {
+  white-space: pre-wrap;
+  font-size: 1.2rem;
+  margin: 0.25rem 0 0 0;
+  color: #000000;
+  font-style: bold;
+}
