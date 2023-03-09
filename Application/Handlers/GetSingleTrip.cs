@@ -1,4 +1,5 @@
 using Application.Core;
+using Application.Interfaces;
 using BroBizz.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -16,19 +17,43 @@ namespace BroBizz.Handlers
         public class Handler : IRequestHandler<Query, Result<Trip>>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(DataContext context, IUserAccessor userAccessor)
             {
+                _userAccessor = userAccessor;
                 _context = context;
             }
             public async Task<Result<Trip>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var trip = await _context.Trips
-                                .Include(x => x.Bridge)
-                                .Include(x => x.Vehicle)
-                                .Include(x => x.Invoice)
-                                .Where(x => x.Id == request.TripId).FirstOrDefaultAsync();
+                var userTrip = await _context.Users
+                                    .Include(x => x.BroBizzDevices)
+                                    .ThenInclude(x => x.Trips)
+                                    .FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
-                return Result<Trip>.Success(trip);
+                var userOwnsTrip = false;
+
+                foreach (var brobizz in userTrip.BroBizzDevices)
+                {
+                    foreach (var trap in brobizz.Trips)
+                    {
+                        if (trap.Id == request.TripId)
+                        {
+                            userOwnsTrip = true;
+                        }
+                    }
+                }
+
+                if (userOwnsTrip)
+                {
+                    var trip = await _context.Trips
+                                                    .Include(x => x.Bridge)
+                                                    .Include(x => x.Vehicle)
+                                                    .Include(x => x.Invoice)
+                                                    .Where(x => x.Id == request.TripId).FirstOrDefaultAsync();
+                    return Result<Trip>.Success(trip);
+                }
+
+                return Result<Trip>.Failure("Cannot find trip");
             }
         }
     }

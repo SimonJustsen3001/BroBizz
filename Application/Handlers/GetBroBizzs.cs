@@ -7,7 +7,7 @@ using Persistence;
 
 namespace BroBizz.Handlers
 {
-    public class List
+    public class GetBroBizzs
     {
         public class Query : IRequest<Result<List<BroBizzDevice>>> { }
 

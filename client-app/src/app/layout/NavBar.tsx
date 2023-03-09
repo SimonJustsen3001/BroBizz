@@ -9,10 +9,9 @@ export default observer(function NavBar() {
   const { userStore } = useStore();
   return (
     <Menu inverted fixed="top" size="massive">
-      <Menu.Item as={"h3"} header>
+      <Menu.Item as={Link} to={"/"} header>
         BMS
       </Menu.Item>
-      <Menu.Item as={NavLink} to="/errors" name="Errors" />
       <Menu.Item position="right">
         {userStore.isLoggedIn ? (
           <Dropdown
@@ -42,11 +41,3 @@ export default observer(function NavBar() {
     </Menu>
   );
 });
-
-/*
-            <Container >
-                <Menu.Item>
-                    <Button positive content='Create activity'/>
-                </Menu.Item>
-            </Container>
-*/

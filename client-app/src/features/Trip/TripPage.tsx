@@ -18,28 +18,12 @@ export default observer(function TripPage() {
 
   return (
     <Segment textAlign="center" vertical className="masthead">
-      <Container text style={{ marginTop: "7em" }}>
+      <Container text>
         {userStore.isLoggedIn ? (
           <>
             <Header>
               <strong>Brobizz:</strong> {id}
             </Header>
-            <div className={classes.buttongrid}>
-              <Button
-                size="huge"
-                className={classes.button}
-                onClick={() => modalStore.openModal(<CreateForm />)}
-              >
-                Add BroBizz
-              </Button>
-              <Button
-                size="huge"
-                className={classes.button}
-                onClick={() => modalStore.openModal(<CreateForm />)}
-              >
-                Add BroBizz
-              </Button>
-            </div>
             <Grid columns={3} stretched>
               {tripStore.trips.map((trip) => (
                 <Grid.Column key={trip.id}>
@@ -48,6 +32,7 @@ export default observer(function TripPage() {
                     inverted
                     circular
                     color="green"
+                    className={classes.trip}
                     as={Link}
                     to={`/trip/${trip.id}`}
                   >

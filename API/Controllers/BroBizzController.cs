@@ -12,13 +12,12 @@ namespace BroBizz.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandleResult(await Mediator.Send(new GetBroBizzs.Query()));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBroBizzDevice(BroBizzDevice broBizzDevice)
         {
-            Console.WriteLine(broBizzDevice.Id);
             return HandleResult(await Mediator.Send(new CreateBroBizz.Command { BroBizzDevice = broBizzDevice }));
         }
 
