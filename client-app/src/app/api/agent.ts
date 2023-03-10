@@ -78,6 +78,10 @@ const BroBizzs = {
   list: () => requests.get<BroBizz[]>("/brobizz"),
   create: (brobizz: BroBizzFormValues) =>
     requests.post<BroBizz>("/brobizz", brobizz),
+  edit: (brobizz: BroBizzFormValues) =>
+    requests.put<BroBizz>(`/brobizz/${brobizz.id}`, brobizz),
+  delete: (brobizz: BroBizzFormValues) =>
+    requests.del<BroBizz>(`/brobizz/${brobizz.id}`),
 };
 
 const Trips = {

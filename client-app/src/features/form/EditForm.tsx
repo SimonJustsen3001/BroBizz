@@ -1,17 +1,16 @@
 import { ErrorMessage, Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
-import { Button, Header } from "semantic-ui-react";
+import { Button, Header, Label } from "semantic-ui-react";
 import * as Yup from "yup";
 import TextInputStandard from "../../app/common/form/TextInputStandard";
+import { BroBizzFormValues } from "../../app/interfaces/brobizzInterface";
 import { useStore } from "../../app/stores/store";
-import ValidationError from "../errors/ValidationError";
 
-export default observer(function CreateForm() {
+export default observer(function EditForm({ id, name }: BroBizzFormValues) {
   const { brobizzStore, modalStore } = useStore();
 
   const validationSchema = Yup.object({
-    name: Yup.string().required("Name cannot be empty"),
-    id: Yup.string().required("Serial cannot be empty"),
+    newname: Yup.string().required("Name cannot be empty"),
   });
 
   return (
@@ -19,47 +18,51 @@ export default observer(function CreateForm() {
       validationSchema={validationSchema}
       enableReinitialize
       initialValues={{
-        name: "",
-        id: "",
+        newname: name,
         error: null,
       }}
       onSubmit={(value, { setErrors }) => {
-        console.log(value);
-        brobizzStore.addBroBizz(value).catch((error) => console.log({ error }));
+        const name = value.newname;
+        const obj = { id, name };
+        return brobizzStore
+          .editBroBizz(obj)
+          .catch((error) => setErrors({ error: "Invalid email or password" }));
       }}
     >
-      {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
-        <Form
-          className="ui form error"
-          onSubmit={handleSubmit}
-          autoComplete="off"
-        >
+      {({ handleSubmit, isSubmitting, errors }) => (
+        <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
           <Header
             as="h2"
-            content="Add new BroBizz device"
+            content="Change BroBizz Name"
             textAlign="center"
             color="green"
           />
-          <TextInputStandard name="name" placeholder="Name" label="Name" />
           <TextInputStandard
-            name="id"
-            placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-            label="Serial key"
+            name="newname"
+            placeholder="New Name"
+            label="New Name"
           />
           <ErrorMessage
             name="error"
-            render={() => <ValidationError errors={errors.error} />}
+            render={() => (
+              <Label
+                style={{ marginBottom: 10 }}
+                basic
+                color="red"
+                content={errors.error}
+              />
+            )}
           />
           <Button
             onClick={() => {
               setTimeout(brobizzStore.loadBroBizzs, 500);
             }}
-            disabled={!isValid || !dirty || isSubmitting}
+            primary
             loading={isSubmitting}
             positive
             floated="right"
             type="submit"
-            content="Add BroBizz"
+            content="Change"
           />
           <Button
             onClick={modalStore.closeModal}
