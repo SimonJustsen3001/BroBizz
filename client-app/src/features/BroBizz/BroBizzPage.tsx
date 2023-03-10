@@ -97,7 +97,9 @@ export default observer(function BroBizzPage() {
               as={Link}
               to={`/invoice/${invoice.id}`}
             >
-              {invoice.invoiceDate.toString().split("T")[0]} {invoice.price} dkk
+              {invoice.invoiceDate.toString().split("T")[0]}{" "}
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              {invoice.price} dkk
             </Segment>
           ))}
         </Grid.Column>
