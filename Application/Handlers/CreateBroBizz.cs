@@ -38,11 +38,19 @@ namespace BroBizz.Handlers
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
-                Console.WriteLine($"\n\n{request.BroBizzDevice.Id} {request.BroBizzDevice.Name}\n\n");
+                Console.WriteLine("\n\n\n\n MADE IT HERE\n\n\n\n");
 
-                user.BroBizzDevices.Add(request.BroBizzDevice);
+                var brobizz = request.BroBizzDevice;
+                if (_context.BroBizzDevices.AsNoTracking().Any(x => x.Id == request.BroBizzDevice.Id))
+                {
+                    brobizz = await _context.BroBizzDevices.SingleOrDefaultAsync(x => x.Id == request.BroBizzDevice.Id);
+                    brobizz.Name = request.BroBizzDevice.Name;
+                }
+                else
+                    _context.BroBizzDevices.Add(brobizz);
+                user.BroBizzDevices.Add(brobizz);
 
-                _context.BroBizzDevices.Add(request.BroBizzDevice);
+                Console.WriteLine("\n\n\n\n MADE IT THERE\n\n\n\n");
 
                 var result = await _context.SaveChangesAsync() > 0;
 

@@ -21,6 +21,7 @@ export default class TripStore {
 
     try {
       const trips = await agent.Trips.list(id);
+      console.log(trips);
       if (this.trips) {
         this.trips = [];
       }

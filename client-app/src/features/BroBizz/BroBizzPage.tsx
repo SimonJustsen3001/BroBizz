@@ -5,6 +5,7 @@ import {
   Divider,
   Grid,
   Header,
+  Icon,
   Segment,
 } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
@@ -16,6 +17,8 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import InvoiceStore from "../../app/stores/invoiceStore";
+import EditForm from "../form/EditForm";
+import DeleteForm from "../form/DeleteForm";
 
 export default observer(function BroBizzPage() {
   const { userStore, modalStore, brobizzStore, invoiceStore } = useStore();
@@ -35,26 +38,46 @@ export default observer(function BroBizzPage() {
           <Header>Invoices</Header>
         </Grid.Column>
       </Grid.Row>
-      <Grid.Row verticalAlign="middle">
+      <Grid.Row>
         <Grid.Column width={9}>
+          <Button
+            floated="left"
+            style={{ marginBottom: 8 }}
+            size="large"
+            color="green"
+            icon="add"
+            className={classes.animate}
+            onClick={() => modalStore.openModal(<CreateForm />)}
+          />
           {userStore.isLoggedIn ? (
             <>
-              <Button
-                style={{ marginBottom: 8 }}
-                size="large"
-                color="green"
-                className={classes.animate}
-                onClick={() => modalStore.openModal(<CreateForm />)}
-              >
-                Add BroBizz
-              </Button>
               {!brobizzStore.loadingInitial ? (
                 <Grid columns={3} stretched>
                   {brobizzStore.brobizzs.map((brobizz) => (
                     <Grid.Column key={brobizz.id}>
+                      <Button.Group attached="top">
+                        <Button
+                          color="blue"
+                          className={classes.animate}
+                          onClick={() =>
+                            modalStore.openModal(<EditForm {...brobizz} />)
+                          }
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          color="red"
+                          icon="close"
+                          className={classes.animate}
+                          onClick={() =>
+                            modalStore.openModal(<DeleteForm {...brobizz} />)
+                          }
+                        ></Button>
+                      </Button.Group>
                       <Segment
-                        inverted
+                        attached
                         circular
+                        inverted
                         color="green"
                         className={classes.animate}
                         as={Link}
@@ -90,6 +113,7 @@ export default observer(function BroBizzPage() {
         <Grid.Column width={6} stretched>
           {invoiceStore.invoices.map((invoice) => (
             <Segment
+              key={invoice.id}
               raised
               inverted
               color="green"

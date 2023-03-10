@@ -38,8 +38,25 @@ export default class BroBizzStore {
     this.loadingInitial = state;
   };
 
+  setSelectedBrobizz = (brobizz: BroBizz) => {
+    this.selectedBroBizz = brobizz;
+  };
+
   addBroBizz = async (creds: BroBizzFormValues) => {
     await agent.BroBizzs.create(creds);
+    router.navigate("/brobizz");
+    store.modalStore.closeModal();
+  };
+
+  editBroBizz = async (creds: BroBizzFormValues) => {
+    await agent.BroBizzs.edit(creds);
+    router.navigate("/brobizz");
+    store.modalStore.closeModal();
+  };
+
+  deleteBroBizz = async (creds: BroBizzFormValues) => {
+    console.log("Made it here");
+    await agent.BroBizzs.delete(creds);
     router.navigate("/brobizz");
     store.modalStore.closeModal();
   };

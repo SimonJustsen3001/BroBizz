@@ -62,9 +62,9 @@ namespace Persistence
                     new BroBizzDevice(new Guid("d2104d11-b7d3-4f89-8992-5a5602512f36"), "Medarbejder William")
                 };
 
-                var stark = await context.Users.FirstOrDefaultAsync(x => x.UserName == "Stark");
-                var silvan = await context.Users.FirstOrDefaultAsync(x => x.UserName == "Silvan");
-                var tom = await context.Users.FirstOrDefaultAsync(x => x.UserName == "Tom");
+                var stark = await context.Users.SingleOrDefaultAsync(x => x.UserName == "Stark");
+                var silvan = await context.Users.SingleOrDefaultAsync(x => x.UserName == "Silvan");
+                var tom = await context.Users.SingleOrDefaultAsync(x => x.UserName == "Tom");
 
                 tom.BroBizzDevices.Add(tomBrobizz);
                 context.BroBizzDevices.Add(tomBrobizz);
@@ -85,16 +85,16 @@ namespace Persistence
 
             if (!context.Trips.Any())
             {
-                var stark = await context.Users.FirstOrDefaultAsync(x => x.UserName == "Stark");
-                var silvan = await context.Users.FirstOrDefaultAsync(x => x.UserName == "Silvan");
-                var tomUser = await context.Users.FirstOrDefaultAsync(x => x.UserName == "Tom");
+                var stark = await context.Users.SingleOrDefaultAsync(x => x.UserName == "Stark");
+                var silvan = await context.Users.SingleOrDefaultAsync(x => x.UserName == "Silvan");
+                var tomUser = await context.Users.SingleOrDefaultAsync(x => x.UserName == "Tom");
 
                 var dennisTrips = new List<Trip> {
                     new Trip
                     {
                         Id = new Guid("44628f19-685d-4eb3-b5ed-843b68ca1ab8"),
-                        Bridge = context.Bridges.FirstOrDefault(x => x.Name == "Storebæltsbroen"),
-                        Vehicle = context.Vehicles.FirstOrDefault(x => x.LicensePlate == "AA22222"),
+                        Bridge = context.Bridges.SingleOrDefault(x => x.Name == "Storebæltsbroen"),
+                        Vehicle = context.Vehicles.SingleOrDefault(x => x.LicensePlate == "AA22222"),
                         Invoice = new Invoice("Silvan", "Edwin Rahrs Vej 88, 8220 Brabrand",
                     DateTime.UtcNow.AddMonths(-2),
                     DateTime.UtcNow.AddMonths(-3),
@@ -103,8 +103,8 @@ namespace Persistence
                     new Trip
                     {
                         Id = new Guid("966a5947-91d8-4d45-bf86-3b1021b0f700"),
-                        Bridge = context.Bridges.FirstOrDefault(x => x.Name == "Storebæltsbroen"),
-                        Vehicle = context.Vehicles.FirstOrDefault(x => x.LicensePlate == "AA22222"),
+                        Bridge = context.Bridges.SingleOrDefault(x => x.Name == "Storebæltsbroen"),
+                        Vehicle = context.Vehicles.SingleOrDefault(x => x.LicensePlate == "AA22222"),
                         Invoice = new Invoice("Silvan", "Edwin Rahrs Vej 88, 8220 Brabrand",
                     DateTime.UtcNow.AddMonths(-1),
                     DateTime.UtcNow.AddMonths(-2),
@@ -115,8 +115,8 @@ namespace Persistence
                 var christianTrip = new Trip
                 {
                     Id = new Guid("efe5bd1a-c01e-4698-9cd2-546149c413f9"),
-                    Bridge = context.Bridges.FirstOrDefault(x => x.Name == "Storebæltsbroen"),
-                    Vehicle = context.Vehicles.FirstOrDefault(x => x.LicensePlate == "AA11111"),
+                    Bridge = context.Bridges.SingleOrDefault(x => x.Name == "Storebæltsbroen"),
+                    Vehicle = context.Vehicles.SingleOrDefault(x => x.LicensePlate == "AA11111"),
                     Invoice = new Invoice("Silvan", "Edwin Rahrs Vej 88, 8220 Brabrand",
                     DateTime.UtcNow,
                     DateTime.UtcNow.AddMonths(-1),
@@ -127,8 +127,8 @@ namespace Persistence
                     new Trip
                     {
                         Id = new Guid("8007212a-53bb-465b-bc1e-382910989b9a"),
-                        Bridge = context.Bridges.FirstOrDefault(x => x.Name == "Øresundsbroen"),
-                        Vehicle = context.Vehicles.FirstOrDefault(x => x.LicensePlate == "AA33333"),
+                        Bridge = context.Bridges.SingleOrDefault(x => x.Name == "Øresundsbroen"),
+                        Vehicle = context.Vehicles.SingleOrDefault(x => x.LicensePlate == "AA33333"),
                         Invoice = new Invoice("Silvan", "Skanderborgvej 277b, 8260 Viby J",
                     DateTime.UtcNow.AddMonths(-2),
                     DateTime.UtcNow.AddMonths(-3),
@@ -137,8 +137,8 @@ namespace Persistence
                     new Trip
                     {
                         Id = new Guid("07aa3d3e-79a8-473e-8a14-8fec7da616f0"),
-                        Bridge = context.Bridges.FirstOrDefault(x => x.Name == "Øresundsbroen"),
-                        Vehicle = context.Vehicles.FirstOrDefault(x => x.LicensePlate == "AA33333"),
+                        Bridge = context.Bridges.SingleOrDefault(x => x.Name == "Øresundsbroen"),
+                        Vehicle = context.Vehicles.SingleOrDefault(x => x.LicensePlate == "AA33333"),
                         Invoice = new Invoice("Silvan", "Skanderborgvej 277b, 8260 Viby J",
                     DateTime.UtcNow.AddMonths(-1),
                     DateTime.UtcNow.AddMonths(-2),
@@ -150,8 +150,8 @@ namespace Persistence
                     new Trip
                     {
                         Id = new Guid("ad438c66-9ed4-4b6b-947d-e7d089aca53f"),
-                        Bridge = context.Bridges.FirstOrDefault(x => x.Name == "Øresundsbroen"),
-                        Vehicle = context.Vehicles.FirstOrDefault(x => x.LicensePlate == "AA33333"),
+                        Bridge = context.Bridges.SingleOrDefault(x => x.Name == "Øresundsbroen"),
+                        Vehicle = context.Vehicles.SingleOrDefault(x => x.LicensePlate == "AA33333"),
                         Invoice = new Invoice("Silvan", "Skanderborgvej 277b, 8260 Viby J",
                     DateTime.UtcNow.AddMonths(2),
                     DateTime.UtcNow.AddMonths(3),
@@ -160,8 +160,8 @@ namespace Persistence
                     new Trip
                     {
                         Id = new Guid("c989840a-a8e3-4dfb-9e34-fea8668bfa32"),
-                        Bridge = context.Bridges.FirstOrDefault(x => x.Name == "Øresundsbroen"),
-                        Vehicle = context.Vehicles.FirstOrDefault(x => x.LicensePlate == "AA33333"),
+                        Bridge = context.Bridges.SingleOrDefault(x => x.Name == "Øresundsbroen"),
+                        Vehicle = context.Vehicles.SingleOrDefault(x => x.LicensePlate == "AA33333"),
                         Invoice = new Invoice("Silvan", "Skanderborgvej 277b, 8260 Viby J",
                     DateTime.UtcNow.AddMonths(1),
                     DateTime.UtcNow.AddMonths(2),
@@ -170,8 +170,8 @@ namespace Persistence
                     new Trip
                     {
                         Id = new Guid("a6cce482-6b43-46fa-bdf9-da49956aa796"),
-                        Bridge = context.Bridges.FirstOrDefault(x => x.Name == "Øresundsbroen"),
-                        Vehicle = context.Vehicles.FirstOrDefault(x => x.LicensePlate == "AA33333"),
+                        Bridge = context.Bridges.SingleOrDefault(x => x.Name == "Øresundsbroen"),
+                        Vehicle = context.Vehicles.SingleOrDefault(x => x.LicensePlate == "AA33333"),
                         Invoice = new Invoice("Silvan", "Skanderborgvej 277b, 8260 Viby J",
                     DateTime.UtcNow.AddMonths(4),
                     DateTime.UtcNow.AddMonths(5),
@@ -180,8 +180,8 @@ namespace Persistence
                     new Trip
                     {
                         Id = new Guid("dcd3d647-9beb-43de-aa57-85d47e6fe8ee"),
-                        Bridge = context.Bridges.FirstOrDefault(x => x.Name == "Øresundsbroen"),
-                        Vehicle = context.Vehicles.FirstOrDefault(x => x.LicensePlate == "AA33333"),
+                        Bridge = context.Bridges.SingleOrDefault(x => x.Name == "Øresundsbroen"),
+                        Vehicle = context.Vehicles.SingleOrDefault(x => x.LicensePlate == "AA33333"),
                         Invoice = new Invoice("Silvan", "Skanderborgvej 277b, 8260 Viby J",
                     DateTime.UtcNow.AddMonths(6),
                     DateTime.UtcNow.AddMonths(7),
@@ -193,8 +193,8 @@ namespace Persistence
                     new Trip
                     {
                         Id = new Guid("ce53fab7-924e-4942-a3fa-32edb97f1c65"),
-                        Bridge = context.Bridges.FirstOrDefault(x => x.Name == "Storebæltsbroen"),
-                        Vehicle = context.Vehicles.FirstOrDefault(x => x.LicensePlate == "BB88888"),
+                        Bridge = context.Bridges.SingleOrDefault(x => x.Name == "Storebæltsbroen"),
+                        Vehicle = context.Vehicles.SingleOrDefault(x => x.LicensePlate == "BB88888"),
                         Invoice = new Invoice("Personlig", "Strandvej 78, 9220 Aalborg Øst",
                     DateTime.UtcNow.AddMonths(-2),
                     DateTime.UtcNow.AddMonths(-3),
@@ -203,8 +203,8 @@ namespace Persistence
                     new Trip
                     {
                         Id = new Guid("733886c1-e46b-4aac-844c-6a8fc2f2681e"),
-                        Bridge = context.Bridges.FirstOrDefault(x => x.Name == "Storebæltsbroen"),
-                        Vehicle = context.Vehicles.FirstOrDefault(x => x.LicensePlate == "BB99999"),
+                        Bridge = context.Bridges.SingleOrDefault(x => x.Name == "Storebæltsbroen"),
+                        Vehicle = context.Vehicles.SingleOrDefault(x => x.LicensePlate == "BB99999"),
                         Invoice = new Invoice("Personlig", "Strandvej 78, 9220 Aalborg Øst",
                     DateTime.UtcNow.AddMonths(-1),
                     DateTime.UtcNow.AddMonths(-2),
@@ -214,11 +214,11 @@ namespace Persistence
 
 
 
-                var dennis = silvan.BroBizzDevices.FirstOrDefault(x => x.Name == "Medarbejder Dennis");
-                var christian = silvan.BroBizzDevices.FirstOrDefault(x => x.Name == "Medarbejder Christian");
-                var john = stark.BroBizzDevices.FirstOrDefault(x => x.Name == "Medarbejder John");
-                var cecilie = stark.BroBizzDevices.FirstOrDefault(x => x.Name == "Medarbejder Cecilie");
-                var tom = tomUser.BroBizzDevices.FirstOrDefault(x => x.Name == "Personlig");
+                var dennis = silvan.BroBizzDevices.SingleOrDefault(x => x.Name == "Medarbejder Dennis");
+                var christian = silvan.BroBizzDevices.SingleOrDefault(x => x.Name == "Medarbejder Christian");
+                var john = stark.BroBizzDevices.SingleOrDefault(x => x.Name == "Medarbejder John");
+                var cecilie = stark.BroBizzDevices.SingleOrDefault(x => x.Name == "Medarbejder Cecilie");
+                var tom = tomUser.BroBizzDevices.SingleOrDefault(x => x.Name == "Personlig");
 
 
                 christian.AddTrip(christianTrip);
