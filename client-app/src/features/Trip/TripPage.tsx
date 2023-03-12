@@ -4,7 +4,6 @@ import { Button, Container, Grid, Header, Segment } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import RegisterForm from "../form/RegisterForm";
 import LoginForm from "../form/LoginForm";
-import CreateForm from "../form/CreateForm";
 import classes from "./TripPage.module.css";
 import { useEffect } from "react";
 

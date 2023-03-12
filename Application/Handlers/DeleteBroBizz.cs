@@ -25,7 +25,6 @@ namespace BroBizz.Handlers
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
-
                 var brobizz = await _context.BroBizzDevices.FindAsync(request.Id);
 
                 if (brobizz == null) return null;

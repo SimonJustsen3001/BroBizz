@@ -32,7 +32,7 @@ namespace API.Extensions
             services.AddMediatR(typeof(GetBroBizzs.Handler));
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddFluentValidationAutoValidation();
-            services.AddValidatorsFromAssemblyContaining<CreateBroBizz>();
+            services.AddValidatorsFromAssemblyContaining<AddBroBizz>();
             services.AddHttpContextAccessor();
             services.AddScoped<IUserAccessor, UserAccessor>();
 

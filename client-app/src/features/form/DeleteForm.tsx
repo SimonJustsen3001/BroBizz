@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Button, Form, Header, Label } from "semantic-ui-react";
+import { Button, Form, Header } from "semantic-ui-react";
 import { BroBizzFormValues } from "../../app/interfaces/brobizzInterface";
 import { useStore } from "../../app/stores/store";
 

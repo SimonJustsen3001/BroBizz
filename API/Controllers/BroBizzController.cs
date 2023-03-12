@@ -18,13 +18,7 @@ namespace BroBizz.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBroBizzDevice(BroBizzDevice broBizzDevice)
         {
-            return HandleResult(await Mediator.Send(new CreateBroBizz.Command { BroBizzDevice = broBizzDevice }));
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetBroBizz(Guid id)
-        {
-            return HandleResult(await Mediator.Send(new GetBroBizzTrips.Query { Id = id }));
+            return HandleResult(await Mediator.Send(new AddBroBizz.Command { BroBizzDevice = broBizzDevice }));
         }
 
         [HttpPut("{id}")]

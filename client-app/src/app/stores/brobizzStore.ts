@@ -20,7 +20,6 @@ export default class BroBizzStore {
 
     try {
       const brobizzs = await agent.BroBizzs.list();
-      console.log(brobizzs);
       if (this.brobizzs) {
         this.brobizzs = [];
       }
@@ -29,7 +28,6 @@ export default class BroBizzStore {
       });
       this.setLoadingInitial(false);
     } catch (error) {
-      console.log(error);
       this.setLoadingInitial(false);
     }
   };
@@ -55,7 +53,6 @@ export default class BroBizzStore {
   };
 
   deleteBroBizz = async (creds: BroBizzFormValues) => {
-    console.log("Made it here");
     await agent.BroBizzs.delete(creds);
     router.navigate("/brobizz");
     store.modalStore.closeModal();

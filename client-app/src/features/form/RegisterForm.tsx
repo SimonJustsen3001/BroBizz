@@ -1,6 +1,6 @@
 import { ErrorMessage, Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
-import { Button, Header, Label } from "semantic-ui-react";
+import { Button, Header } from "semantic-ui-react";
 import * as Yup from "yup";
 import TextInputStandard from "../../app/common/form/TextInputStandard";
 import { useStore } from "../../app/stores/store";
@@ -28,7 +28,6 @@ export default observer(function RegisterForm() {
         error: null,
       }}
       onSubmit={(value, { setErrors }) => {
-        console.log(value);
         userStore.register(value).catch((error) => setErrors({ error }));
       }}
     >

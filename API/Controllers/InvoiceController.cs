@@ -1,5 +1,4 @@
 using BroBizz.Handlers;
-using BroBizz.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BroBizz.Controllers

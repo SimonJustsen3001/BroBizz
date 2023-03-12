@@ -16,7 +16,6 @@ export default class InvoiceStore {
 
     try {
       const invoices = await agent.Invoices.list();
-      console.log(invoices);
       if (this.invoices) {
         this.invoices = [];
       }
@@ -34,11 +33,9 @@ export default class InvoiceStore {
 
     try {
       const invoice = await agent.Invoices.single(id);
-      console.log(invoice);
       this.selectedInvoice = invoice;
       this.setLoadingInitial(false);
     } catch (error) {
-      console.log(error);
       this.setLoadingInitial(false);
     }
   };
