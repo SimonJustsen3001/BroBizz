@@ -6,10 +6,6 @@ namespace BroBizz.Models
     public class Bridge
     {
         public string Name { get; set; }
-        public Bridge(string name)
-        {
-            Name = name;
-        }
     }
 }
 

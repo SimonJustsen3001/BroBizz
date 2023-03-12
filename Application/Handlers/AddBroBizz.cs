@@ -4,13 +4,12 @@ using Application.Validators;
 using BroBizz.Models;
 using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace BroBizz.Handlers
 {
-    public class CreateBroBizz
+    public class AddBroBizz
     {
         public class Command : IRequest<Result<Unit>>
         {
@@ -37,10 +36,8 @@ namespace BroBizz.Handlers
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
-
-                Console.WriteLine("\n\n\n\n MADE IT HERE\n\n\n\n");
-
                 var brobizz = request.BroBizzDevice;
+
                 if (_context.BroBizzDevices.AsNoTracking().Any(x => x.Id == request.BroBizzDevice.Id))
                 {
                     brobizz = await _context.BroBizzDevices.SingleOrDefaultAsync(x => x.Id == request.BroBizzDevice.Id);
@@ -49,8 +46,6 @@ namespace BroBizz.Handlers
                 else
                     _context.BroBizzDevices.Add(brobizz);
                 user.BroBizzDevices.Add(brobizz);
-
-                Console.WriteLine("\n\n\n\n MADE IT THERE\n\n\n\n");
 
                 var result = await _context.SaveChangesAsync() > 0;
 

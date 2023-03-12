@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BroBizz.Models
+﻿namespace BroBizz.Models
 {
     public class Trip
     {

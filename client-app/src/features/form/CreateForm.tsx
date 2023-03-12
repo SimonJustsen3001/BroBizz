@@ -24,8 +24,7 @@ export default observer(function CreateForm() {
         error: null,
       }}
       onSubmit={(value, { setErrors }) => {
-        console.log(value);
-        brobizzStore.addBroBizz(value).catch((error) => console.log({ error }));
+        brobizzStore.addBroBizz(value).catch((error) => setErrors({ error }));
       }}
     >
       {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (

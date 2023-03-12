@@ -23,7 +23,6 @@ namespace BroBizz.Handlers
             public async Task<Result<List<BroBizzDevice>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
-
                 var userbrobizzs = await _context.BroBizzDevices.Where(x => x.AppUser.Id == user.Id).ToListAsync();
 
                 return Result<List<BroBizzDevice>>.Success(userbrobizzs);

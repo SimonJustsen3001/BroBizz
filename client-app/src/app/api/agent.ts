@@ -32,7 +32,6 @@ axios.interceptors.response.use(
       case 400:
         if (config.method === "get" && data.errors.hasOwnProperty("id")) {
           router.navigate("/not-found");
-          console.log("error");
         }
         if (data.errors) {
           const modalStateErrors = [];

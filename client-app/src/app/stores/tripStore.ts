@@ -21,7 +21,6 @@ export default class TripStore {
 
     try {
       const trips = await agent.Trips.list(id);
-      console.log(trips);
       if (this.trips) {
         this.trips = [];
       }
@@ -30,7 +29,6 @@ export default class TripStore {
       });
       this.setLoadingInitial(false);
     } catch (error) {
-      console.log(error);
       this.setLoadingInitial(false);
     }
   };
@@ -40,11 +38,9 @@ export default class TripStore {
 
     try {
       const trip = await agent.Trips.single(id);
-      console.log(trip);
       this.selectedTrip = trip;
       this.setLoadingInitial(false);
     } catch (error) {
-      console.log(error);
       this.setLoadingInitial(false);
     }
   };
